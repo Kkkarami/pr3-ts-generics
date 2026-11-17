@@ -15,8 +15,8 @@ export class InMemoryRepository<T extends BaseEntity> implements IRepository<T> 
 
         if (!item) {
             return null;
-        } 
-        
+        }
+
         return item;
     }
 
@@ -26,21 +26,27 @@ export class InMemoryRepository<T extends BaseEntity> implements IRepository<T> 
 
     deleteById(id: string): boolean {
         const index = this.items.findIndex(item => item.id === id);
+
         if (index === -1) {
             return false;
         }
+
         this.items.splice(index, 1);
         return true;
     }
 
     update(id: string, patch: UpdateDto<T>): T | null {
         const index = this.items.findIndex(item => item.id === id);
+
         if (index === -1) {
             return null;
         }
+
         const item = this.items[index];
+
         Object.assign(item, patch);
         item.updatedAt = new Date();
+
         return item;
     }
 }
